@@ -1,0 +1,91 @@
+---
+---
+
+<section id="about" class="about-section">
+  <div class="header">
+    <span class="subheading">Who I Am</span>
+    <h2>About Me</h2>
+  </div>
+
+  <div class="content-grid">
+    <div class="bio">
+      <p>
+        I am a passionate Data Analyst with a knack for identifying patterns and delivering data-driven solutions. 
+        With experience in Power BI, SQL, and statistical analysis, I help businesses optimize their performance through 
+        clear and actionable dashboards.
+      </p>
+      <p>
+        My expertise includes clustering analysis for retail stores, designing efficiency dashboards, and conducting rigorous A/B testing.
+        I believe that data tells a story, and my job is to make that story clear and compelling.
+      </p>
+      
+      <div class="info-list">
+        <ul>
+          <li><strong>Name:</strong> Daniel</li>
+          <li><strong>Role:</strong> Data Analyst</li>
+          <li><strong>Email:</strong> daniel@example.com</li>
+          <li><strong>Location:</strong> City, Country</li>
+        </ul>
+      </div>
+
+      <a href="/cv.pdf" class="btn-download" target="_blank">Download CV</a>
+    </div>
+    
+     <!-- Optional: Add a stat counter or another image here if desired -->
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .subheading {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column for now, can be split if more content */
+    gap: var(--spacing-lg);
+  }
+
+  .bio p {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+  }
+
+  .info-list ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md); 
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .info-list li {
+      color: var(--color-text-main);
+  }
+
+  .btn-download {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--color-text-main);
+    color: white;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+
+  .btn-download:hover {
+    background-color: black;
+  }
+</style>

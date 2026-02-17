@@ -1,0 +1,108 @@
+---
+---
+
+<section id="contact" class="section">
+  <h2 class="section-title">Get In Touch</h2>
+  <p class="section-subtitle">Have a question or want to work together?</p>
+
+  <div class="contact-container">
+    <div class="contact-info">
+      <div class="contact-card">
+        <h3>Email</h3>
+        <p><a href="mailto:daniel@example.com">daniel@example.com</a></p>
+      </div>
+      <div class="contact-card">
+        <h3>LinkedIn</h3>
+        <p><a href="https://linkedin.com/in/daniel" target="_blank">Connect with me</a></p>
+      </div>
+      <div class="contact-card">
+        <h3>Location</h3>
+        <p>City, Country</p>
+      </div>
+    </div>
+
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required placeholder="Your Name" />
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="Your Email" />
+      </div>
+      
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required placeholder="How can I help you?"></textarea>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .section { padding: var(--spacing-lg) 0; }
+  
+  .section-subtitle {
+     color: var(--color-text-muted);
+     margin-bottom: var(--spacing-lg);
+  }
+
+  .contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--spacing-lg);
+  }
+
+  .contact-card {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .contact-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+  }
+
+  .contact-form {
+    background: white;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-family: inherit;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+  }
+
+  @media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+  }
+</style>

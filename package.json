@@ -1,0 +1,21 @@
+{
+  "name": "daniel-portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "new:post": "node scripts/new-post.js",
+    "new:project": "node scripts/new-project.js"
+  },
+  "dependencies": {
+    "astro": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  }
+}

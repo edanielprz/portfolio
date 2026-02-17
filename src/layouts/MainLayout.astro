@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Daniel - Data Analyst Portfolio" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="layout-wrapper">
+      <aside class="sidebar">
+        <slot name="sidebar" />
+      </aside>
+      <main class="main-content">
+        <slot />
+        <footer class="mobile-footer">
+            <p>&copy; {new Date().getFullYear()} Daniel. All rights reserved.</p>
+        </footer>
+      </main>
+    </div>
+
+    <style>
+      .layout-wrapper {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: var(--sidebar-width);
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow-y: auto;
+        background-color: #1a202c; /* Dark sidebar based on request description implying contrast or image overlay */
+        color: white;
+        z-index: 10;
+      }
+
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        padding: var(--spacing-lg) var(--spacing-md);
+        background-color: var(--color-bg);
+      }
+
+      .mobile-footer {
+        display: none;
+        text-align: center;
+        margin-top: var(--spacing-lg);
+        color: var(--color-text-muted);
+        font-size: 0.875rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .layout-wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          height: auto;
+          position: relative;
+          min-height: 300px; /* Space for the image/hero on mobile */
+        }
+
+        .main-content {
+          margin-left: 0;
+          padding: var(--spacing-md) var(--spacing-sm);
+        }
+
+        .mobile-footer {
+          display: block;
+        }
+      }
+    </style>
+  </body>
+</html>

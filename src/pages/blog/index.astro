@@ -1,0 +1,80 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<MainLayout title="Blog | Daniel - Data Analyst">
+  <Sidebar slot="sidebar" />
+  
+  <div class="blog-container">
+    <h1>Blog</h1>
+    <p class="intro">Thoughts on data, analysis, and technology.</p>
+    
+    <div class="posts-list">
+      {sortedPosts.map(post => (
+        <article class="post-item">
+          <a href={`/blog/${post.slug}`}>
+            <h2>{post.data.title}</h2>
+            <div class="meta">
+              <span>{post.data.date.toLocaleDateString()}</span>
+              <span class="tags">{post.data.tags.join(', ')}</span>
+            </div>
+            <p>{post.data.summary}</p>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .blog-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .intro {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-md);
+  }
+
+  .post-item {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .post-item a {
+    display: block;
+  }
+
+  .post-item h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-main);
+  }
+  
+  .post-item a:hover h2 {
+      color: var(--color-primary);
+  }
+
+  .meta {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    gap: 1rem;
+  }
+
+  .tags {
+    font-style: italic;
+  }
+</style>

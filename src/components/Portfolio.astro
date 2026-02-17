@@ -1,0 +1,239 @@
+---
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const sortedProjects = projects.sort((a, b) => (a.data.sortOrder || 99) - (b.data.sortOrder || 99));
+---
+
+<section id="portfolio" class="section">
+  <h2 class="section-title">Portfolio</h2>
+  
+  <div class="projects-grid">
+    {sortedProjects.map((project) => (
+      <article class="project-card" data-project={JSON.stringify(project.data)}>
+        <div class="card-image">
+            <img src={project.data.image || "https://via.placeholder.com/600x400"} alt={project.data.title} loading="lazy" />
+            <div class="overlay">
+                <span class="view-btn">View Details</span>
+            </div>
+        </div>
+        <div class="card-content">
+            <h3>{project.data.title}</h3>
+            <p class="tags">{project.data.tags.join(', ')}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="project-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <img id="modal-image" src="" alt="" />
+        <h3 id="modal-title"></h3>
+        <p id="modal-tags" class="text-primary"></p>
+        <p id="modal-description"></p>
+        <div class="modal-links">
+            <a id="modal-demo" href="#" target="_blank" class="btn btn-sm hidden">Live Demo</a>
+            <a id="modal-repo" href="#" target="_blank" class="btn btn-sm btn-outline hidden">GitHub</a>
+        </div>
+    </div>
+</div>
+
+<style>
+  .section { padding: var(--spacing-lg) 0; }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .project-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-image {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+  
+  .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+  }
+  
+  .project-card:hover .card-image img {
+      transform: scale(1.05);
+  }
+
+  .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+  }
+  
+  .project-card:hover .overlay {
+      opacity: 1;
+  }
+  
+  .view-btn {
+      color: white;
+      border: 1px solid white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+  }
+
+  .card-content {
+    padding: var(--spacing-sm);
+  }
+
+  .card-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+  }
+  
+  .tags {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+  }
+
+  /* Modal Styles */
+  .modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+  }
+  
+  .modal.visible {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  .modal-content {
+      background: white;
+      padding: var(--spacing-md);
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+  }
+  
+  .close-modal {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+  }
+  
+  #modal-image {
+      margin-bottom: var(--spacing-sm);
+      border-radius: 4px;
+  }
+  
+  .modal-links {
+      margin-top: var(--spacing-md);
+      display: flex;
+      gap: 10px;
+  }
+  
+  .hidden { display: none; }
+  
+  .btn-sm {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      border-radius: 4px;
+      background: var(--color-primary);
+      color: white;
+  }
+  .btn-sm.btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+  }
+</style>
+
+<script>
+  // Setup Modal Logic
+  const modal = document.getElementById('project-modal');
+  const cards = document.querySelectorAll('.project-card');
+  const closeBtn = document.querySelector('.close-modal');
+
+  // Elements to populate
+  const mTitle = document.getElementById('modal-title');
+  const mDesc = document.getElementById('modal-description');
+  const mTags = document.getElementById('modal-tags');
+  const mImg = document.getElementById('modal-image') as HTMLImageElement;
+  const mDemo = document.getElementById('modal-demo');
+  const mRepo = document.getElementById('modal-repo');
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+        // Safe cast if we use TypeScript, or just standard JS access
+        const data = JSON.parse(card.getAttribute('data-project') || '{}');
+        
+        if (mTitle) mTitle.textContent = data.title;
+        if (mDesc) mDesc.textContent = data.description;
+        if (mTags) mTags.textContent = data.tags ? data.tags.join(', ') : '';
+        if (mImg && data.image) mImg.src = data.image;
+        
+        if (mDemo) {
+            if (data.link) {
+                mDemo.setAttribute('href', data.link);
+                mDemo.classList.remove('hidden');
+            } else {
+                mDemo.classList.add('hidden');
+            }
+        }
+        
+        if (mRepo) {
+             if (data.repo) {
+                mRepo.setAttribute('href', data.repo);
+                mRepo.classList.remove('hidden');
+            } else {
+                mRepo.classList.add('hidden');
+            }
+        }
+
+        modal?.classList.add('visible');
+    });
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    modal?.classList.remove('visible');
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal?.classList.remove('visible');
+    }
+  });
+</script>

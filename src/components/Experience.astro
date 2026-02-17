@@ -1,36 +1,115 @@
 ---
 const experience = [
   {
-    role: "Senior Data Analyst",
-    company: "Company A",
-    period: "2021 - Present",
-    description: "Led the migration of reporting systems to Power BI, reducing manual reporting time by 40%. Implemented store clustering algorithms."
-  },
-  {
     role: "Data Analyst",
-    company: "Company B",
-    period: "2019 - 2021",
-    description: "Developed efficiency dashboards for operational teams. Conducted A/B testing on marketing campaigns."
+    company: "EFZ Energy",
+    period: "Feb 2025 - Present",
+    responsibilities: [
+      "Designed and implemented a performance dashboard system, optimizing the bonus budget by 27% and improving workload balance.",
+      "Developed Power BI dashboards with structured data modeling and DAX measures to track strategic KPIs.",
+      "Conducted exploratory data analysis to identify operational improvements and cost-reduction opportunities.",
+      "Automated data preparation and transformation processes using Excel and Power Query.",
+      "Applied statistical methods to support operational decisions and performance evaluations."
+    ],
+    skills: ["Data Analysis", "Power BI", "DAX", "Power Query", "Statistics", "Business Intelligence"]
   },
   {
-    role: "Junior Analyst",
-    company: "Company C",
-    period: "2018 - 2019",
-    description: "Assisted in data cleaning and SQL database maintenance. Created weekly performance reports in Excel."
+    role: "Administrative Analyst",
+    company: "Grupo Truper",
+    period: "May 2021 - Jan 2025",
+    responsibilities: [
+      "Managed supplier development and nationwide route planning logistics.",
+      "Supervised commercial store labeling projects across multiple locations.",
+      "Developed comprehensive KPIs and reports using Excel and Power BI to track logistics performance and billing accuracy.",
+      "Oversaw billing processes and ensured timely payment follow-ups."
+    ],
+    skills: ["Logistics", "Power BI", "KPI Management", "Documentation", "Financial Analysis"]
+  },
+  {
+    role: "Warehouse Administrator",
+    company: "Grupo Truper",
+    period: "Sept 2018 - May 2021",
+    responsibilities: [
+      "Developed Power BI KPIs to measure warehouse process efficiency and employee performance.",
+      "Managed inventory planning and optimized the delivery of picking lists to suppliers.",
+      "Streamlined warehouse administrative processes to improve operational flow."
+    ],
+    skills: ["Warehouse Management", "Inventory Planning", "Process Improvement", "Power BI"]
+  },
+  {
+    role: "Electrical Coordinator",
+    company: "Grupo Truper",
+    period: "Mar 2017 - Sept 2018",
+    responsibilities: [
+      "Led a team of technicians in commercial low-voltage electrical installations and remodeling projects nationwide.",
+      "Coordinated field work, ensuring compliance with safety and quality standards.",
+      "Provided technical support for commercial construction and remodeling initiatives."
+    ],
+    skills: ["Team Leadership", "Project Coordination", "Field Supervision"]
+  },
+  {
+    role: "Junior Project Engineer",
+    company: "Centro Integral de Tecnología y Sustentabilidad",
+    period: "Jul 2015 - Mar 2018",
+    responsibilities: [
+      "Executed photovoltaic solar energy projects, including design, technical sizing, and site surveys.",
+      "Conducted client negotiations and prepared detailed technical quotations.",
+      "Served as a technical instructor for photovoltaic solar energy training programs."
+    ],
+    skills: ["Solar Energy", "Project Engineering", "Technical Sales", "Instruction"]
+  },
+   {
+    role: "Junior Project Engineer",
+    company: "WTR Solar",
+    period: "Jul 2015 - Oct 2015",
+    responsibilities: [
+      "Designed off-grid and grid-connected photovoltaic systems.",
+      "Provided technical training to external personnel on system operations and maintenance."
+    ],
+    skills: ["System Design", "Photovoltaics", "Training"]
   }
 ];
 
 const education = [
     {
-        degree: "B.S. Statistics",
-        school: "University Name",
-        period: "2014 - 2018"
+        degree: "B.S. Electrical and Electronic Engineering",
+        school: "Universidad Nacional Autónoma de México (UNAM)",
+        period: "2012 - 2016"
+    },
+    {
+        degree: "Industrial Instrumentation Technician",
+        school: "CECyTEM",
+        period: "2008 - 2011"
+    }
+];
+
+const certifications = [
+    {
+        name: "Bootcamp Premium SQL",
+        issuer: "Código Facilito",
+        date: "Issued Feb 2026",
+        details: "Advanced Joins, Subqueries, CTEs, Window Functions, ETL, Query optimization, Database design."
+    },
+    {
+         name: "Extract, Transform and Load Data in Power BI",
+         issuer: "Microsoft",
+         date: "Mar 2025"
+    },
+    {
+         name: "Harnessing the Power of Data with Power BI",
+         issuer: "Microsoft",
+         date: "Feb 2025"
+    },
+    {
+         name: "Data Preparation for Analysis with Microsoft Excel",
+         issuer: "Microsoft",
+         date: "Feb 2025"
     }
 ];
 ---
 
 <section id="experience" class="section">
-  <h2 class="section-title">Experience & Education</h2>
+  <h2 class="section-title">Experience</h2>
   
   <div class="timeline">
     {experience.map(item => (
@@ -39,11 +118,21 @@ const education = [
         <div class="timeline-content">
           <h3 class="role">{item.role}</h3>
           <span class="company">{item.company} | {item.period}</span>
-          <p class="description">{item.description}</p>
+          <ul class="responsibilities">
+            {item.responsibilities.map(r => <li>{r}</li>)}
+          </ul>
+          {item.skills && (
+              <div class="skills-tags">
+                {item.skills.map(skill => <span class="tag">{skill}</span>)}
+              </div>
+          )}
         </div>
       </div>
     ))}
+  </div>
 
+  <h2 class="section-title">Education</h2>
+  <div class="timeline">
     {education.map(item => (
         <div class="timeline-item education">
             <div class="timeline-marker"></div>
@@ -54,6 +143,17 @@ const education = [
         </div>
     ))}
   </div>
+
+  <h2 class="section-title">Certifications</h2>
+  <div class="cert-grid">
+     {certifications.map(cert => (
+        <div class="cert-card">
+            <h3>{cert.name}</h3>
+            <p class="issuer">{cert.issuer} | {cert.date}</p>
+            {cert.details && <p class="details">{cert.details}</p>}
+        </div>
+     ))}
+  </div>
 </section>
 
 <style>
@@ -63,6 +163,13 @@ const education = [
 
   .section-title {
      margin-bottom: var(--spacing-lg);
+     margin-top: var(--spacing-lg);
+     font-size: 1.8rem;
+     color: #1a202c;
+  }
+  
+  .section-title:first-of-type {
+      margin-top: 0;
   }
 
   .timeline {
@@ -79,7 +186,7 @@ const education = [
   .timeline-marker {
     position: absolute;
     left: -2.35rem; /* Adjust to center on line */
-    top: 0;
+    top: 0.25rem;
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
@@ -105,7 +212,60 @@ const education = [
     font-weight: 600;
   }
 
-  .description {
+  .responsibilities {
+    list-style-type: disc;
+    padding-left: 1.2rem;
+    margin-bottom: var(--spacing-sm);
     color: var(--color-text-muted);
+  }
+  
+  .responsibilities li {
+      margin-bottom: 0.25rem;
+  }
+  
+  .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+  }
+  
+  .tag {
+      background-color: var(--color-bg-secondary);
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+  }
+
+  /* Certification Grid */
+  .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+  }
+  
+  .cert-card {
+      background: var(--color-bg-secondary);
+      padding: var(--spacing-md);
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+  }
+  
+  .cert-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+  }
+  
+  .issuer {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+  }
+  
+  .details {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
   }
 </style>
